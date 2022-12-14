@@ -1,0 +1,176 @@
+mysql> create database AddressBookService;
+Query OK, 1 row affected (0.06 sec)
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| addressbookservice |
+| information_schema |
+| mysql              |
+| performance_schema |
+| school             |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+mysql> use AddressBookService;
+Database changed
+mysql> create table AddressBook(
+    -> firstName varchar(20),
+    -> lastName varchar(20),
+    -> address varchar(20),
+    -> city varchar(20),
+    -> state varchar(20),
+    -> zipCode int,
+    -> phoneNumber varchar(13),
+    -> emailID varchar(20)
+    -> );
+Query OK, 0 rows affected (0.45 sec)
+mysql> insert into AddressBook values('Vivek','Gujale','10-12/10 Shantinagar','Kalamboli','Maharashtra','475456','8974561230','vivek96@gmail.com'),('Sandip','Kengar','25-32/1 Kantinagar','Noida','UP','412451','7894561230','sandip14@gmail.com'),('Sagar','Kalokhe','16-11/16 Gandhinagar','Ahmedabad','Gujarat','654123','9874561230','shaggy56@gmail.com'),('Nilesh','Choudhary','13-21/6 Jantanagar','Jaipur','Rajasthan','439145','7531596543','nil695@gmail.com');
+Query OK, 4 rows affected (0.07 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+mysql> select * from AddressBook;
++-----------+-----------+----------------------+-----------+-------------+---------+-------------+--------------------+
+| firstName | lastName  | address              | city      | state       | zipCode | phoneNumber | emailID            |
++-----------+-----------+----------------------+-----------+-------------+---------+-------------+--------------------+
+| Vivek     | Gujale    | 10-12/10 Shantinagar | Kalamboli | Maharashtra |  475456 | 8974561230  | vivek96@gmail.com  |
+| Sandip    | Kengar    | 25-32/1 Kantinagar   | Noida     | UP          |  412451 | 7894561230  | sandip14@gmail.com |
+| Sagar     | Kalokhe   | 16-11/16 Gandhinagar | Ahmedabad | Gujarat     |  654123 | 9874561230  | shaggy56@gmail.com |
+| Nilesh    | Choudhary | 13-21/6 Jantanagar   | Jaipur    | Rajasthan   |  439145 | 7531596543  | nil695@gmail.com   |
++-----------+-----------+----------------------+-----------+-------------+---------+-------------+--------------------+
+4 rows in set (0.00 sec)
+mysql> update AddressBook set city = 'Ranchi', state = 'Jharkhand' where firstName = 'Sandip';
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from AddressBook;
++-----------+-----------+----------------------+-----------+-------------+---------+-------------+--------------------+
+| firstName | lastName  | address              | city      | state       | zipCode | phoneNumber | emailID            |
++-----------+-----------+----------------------+-----------+-------------+---------+-------------+--------------------+
+| Vivek     | Gujale    | 10-12/10 Shantinagar | Kalamboli | Maharashtra |  475456 | 8974561230  | vivek96@gmail.com  |
+| Sandip    | Kengar    | 25-32/1 Kantinagar   | Ranchi    | Jharkhand   |  412451 | 7894561230  | sandip14@gmail.com |
+| Sagar     | Kalokhe   | 16-11/16 Gandhinagar | Ahmedabad | Gujarat     |  654123 | 9874561230  | shaggy56@gmail.com |
+| Nilesh    | Choudhary | 13-21/6 Jantanagar   | Jaipur    | Rajasthan   |  439145 | 7531596543  | nil695@gmail.com   |
++-----------+-----------+----------------------+-----------+-------------+---------+-------------+--------------------+
+4 rows in set (0.00 sec)
+mysql> delete from AddressBook where firstName = 'Nilesh';
+Query OK, 1 row affected (0.07 sec)
+mysql> select * from AddressBook;
++-----------+----------+----------------------+-----------+-------------+---------+-------------+--------------------+
+| firstName | lastName | address              | city      | state       | zipCode | phoneNumber | emailID            |
++-----------+----------+----------------------+-----------+-------------+---------+-------------+--------------------+
+| Vivek     | Gujale   | 10-12/10 Shantinagar | Kalamboli | Maharashtra |  475456 | 8974561230  | vivek96@gmail.com  |
+| Sandip    | Kengar   | 25-32/1 Kantinagar   | Ranchi    | Jharkhand   |  412451 | 7894561230  | sandip14@gmail.com |
+| Sagar     | Kalokhe  | 16-11/16 Gandhinagar | Ahmedabad | Gujarat     |  654123 | 9874561230  | shaggy56@gmail.com |
++-----------+----------+----------------------+-----------+-------------+---------+-------------+--------------------+
+3 rows in set (0.00 sec)
+mysql> select * from AddressBook where city = 'Ranchi' or  state = 'Maharashtra';
++-----------+----------+----------------------+-----------+-------------+---------+-------------+--------------------+
+| firstName | lastName | address              | city      | state       | zipCode | phoneNumber | emailID            |
++-----------+----------+----------------------+-----------+-------------+---------+-------------+--------------------+
+| Vivek     | Gujale   | 10-12/10 Shantinagar | Kalamboli | Maharashtra |  475456 | 8974561230  | vivek96@gmail.com  |
+| Sandip    | Kengar   | 25-32/1 Kantinagar   | Ranchi    | Jharkhand   |  412451 | 7894561230  | sandip14@gmail.com |
++-----------+----------+----------------------+-----------+-------------+---------+-------------+--------------------+
+2 rows in set (0.00 sec)
+mysql> select * from AddressBook where city = 'Kalamboli' and state = 'Maharashtra';
++-----------+----------+----------------------+-----------+-------------+---------+-------------+-------------------+
+| firstName | lastName | address              | city      | state       | zipCode | phoneNumber | emailID           |
++-----------+----------+----------------------+-----------+-------------+---------+-------------+-------------------+
+| Vivek     | Gujale   | 10-12/10 Shantinagar | Kalamboli | Maharashtra |  475456 | 8974561230  | vivek96@gmail.com |
++-----------+----------+----------------------+-----------+-------------+---------+-------------+-------------------+
+1 row in set (0.00 sec)
+mysql> select count(firstName) from AddressBook;
++------------------+
+| count(firstName) |
++------------------+
+|                3 |
++------------------+
+1 row in set (0.09 sec)
+mysql> select firstName,lastname from AddressBook order by city;
++-----------+----------+
+| firstName | lastname |
++-----------+----------+
+| Sagar     | Kalokhe  |
+| Vivek     | Gujale   |
+| Sandip    | Kengar   |
++-----------+----------+
+3 rows in set (0.05 sec)
+mysql> ALTER TABLE AddressBook ADD friends varchar(20);
+Query OK, 0 rows affected (0.52 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+mysql> ALTER TABLE AddressBook ADD family varchar(20);
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+mysql> ALTER TABLE AddressBook ADD profession varchar(20);
+Query OK, 0 rows affected (0.12 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+mysql> select * from AddressBook;
++-----------+----------+----------------------+-----------+-------------+---------+-------------+--------------------+---------+--------+------------+
+| firstName | lastName | address              | city      | state       | zipCode | phoneNumber | emailID            | friends | family | profession |
++-----------+----------+----------------------+-----------+-------------+---------+-------------+--------------------+---------+--------+------------+
+| Vivek     | Gujale   | 10-12/10 Shantinagar | Kalamboli | Maharashtra |  475456 | 8974561230  | vivek96@gmail.com  | NULL    | NULL   | NULL       |
+| Sandip    | Kengar   | 25-32/1 Kantinagar   | Ranchi    | Jharkhand   |  412451 | 7894561230  | sandip14@gmail.com | NULL    | NULL   | NULL       |
+| Sagar     | Kalokhe  | 16-11/16 Gandhinagar | Ahmedabad | Gujarat     |  654123 | 9874561230  | shaggy56@gmail.com | NULL    | NULL   | NULL       |
++-----------+----------+----------------------+-----------+-------------+---------+-------------+--------------------+---------+--------+------------+
+3 rows in set (0.00 sec)
+mysql> UPDATE AddressBook SET family = 'Dipak', friends = 'Sandip', profession = 'DevOps Engineer' WHERE firstName = 'Vivek';
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+mysql> SELECT * FROM AddressBook;
++-----------+----------+----------------------+-----------+-------------+---------+-------------+--------------------+---------+--------+-----------------+
+| firstName | lastName | address              | city      | state       | zipCode | phoneNumber | emailID            | friends | family | profession      |
++-----------+----------+----------------------+-----------+-------------+---------+-------------+--------------------+---------+--------+-----------------+
+| Vivek     | Gujale   | 10-12/10 Shantinagar | Kalamboli | Maharashtra |  475456 | 8974561230  | vivek96@gmail.com  | Sandip  | Dipak  | DevOps Engineer |
+| Sandip    | Kengar   | 25-32/1 Kantinagar   | Ranchi    | Jharkhand   |  412451 | 7894561230  | sandip14@gmail.com | NULL    | NULL   | NULL            |
+| Sagar     | Kalokhe  | 16-11/16 Gandhinagar | Ahmedabad | Gujarat     |  654123 | 9874561230  | shaggy56@gmail.com | NULL    | NULL   | NULL            |
++-----------+----------+----------------------+-----------+-------------+---------+-------------+--------------------+---------+--------+-----------------+
+3 rows in set (0.00 sec)
+mysql> UPDATE AddressBook SET family = 'Vaibhav', friends = 'Vinayak', profession = 'Developer' WHERE firstName = 'Sandip';';
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+mysql> UPDATE AddressBook SET family = 'Rahul', friends = 'Vivek', profession = 'Chemical Engineer' WHERE firstName = 'Sagar';
+Query OK, 1 row affected (0.19 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+mysql> SELECT * FROM AddressBook;
++-----------+----------+----------------------+-----------+-------------+---------+-------------+--------------------+---------+---------+-------------------+
+| firstName | lastName | address              | city      | state       | zipCode | phoneNumber | emailID            | friends | family  | profession        |
++-----------+----------+----------------------+-----------+-------------+---------+-------------+--------------------+---------+---------+-------------------+
+| Vivek     | Gujale   | 10-12/10 Shantinagar | Kalamboli | Maharashtra |  475456 | 8974561230  | vivek96@gmail.com  | Sandip  | Dipak   | DevOps Engineer   |
+| Sandip    | Kengar   | 25-32/1 Kantinagar   | Ranchi    | Jharkhand   |  412451 | 7894561230  | sandip14@gmail.com | Vinayak | Vaibhav | Developer         |
+| Sagar     | Kalokhe  | 16-11/16 Gandhinagar | Ahmedabad | Gujarat     |  654123 | 9874561230  | shaggy56@gmail.com | Vivek   | Rahul   | Chemical Engineer |
++-----------+----------+----------------------+-----------+-------------+---------+-------------+--------------------+---------+---------+-------------------+
+3 rows in set (0.00 sec)
+mysql> select count(family) from AddressBook;
++---------------+
+| count(family) |
++---------------+
+|             3 |
++---------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
